@@ -1,0 +1,177 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+<h1 align="center">cosintanexloguess</h1>
+<style>
+    * {
+        margin: 5px;
+    }
+    
+    .valider {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .input {
+        transform: translateY(10px);
+        width: 100px;
+        height: 30px;
+        border-radius: 10px;
+    }
+    
+    .contentBox {
+        justify-content: center;
+        display: flex;
+        border-top: 10px;
+        border-color: blue;
+    }
+    
+    .first {
+        padding: -35px;
+    }
+    
+    .seccond {
+        padding: -35px;
+    }
+    
+    .fin {
+        justify-content: center;
+        display: flex;
+    }
+    
+    .prop {
+        justify-content: center;
+        display: flex;
+        font-size: 11px;
+    }
+</style>
+
+<div class="contentBox" id="contentBox">
+    <div class="first" id="ggbApplet"></div>
+
+    <div class="seccond" id="ggbApplet2"></div>
+
+    <script type="text/javascript">
+        var parameters = {
+            id: "ggbApplet",
+            width: 400,
+            height: 350,
+            showMenuBar: false,
+            showAlgebraInput: false,
+            showToolBar: false,
+            showToolBarHelp: false,
+            showResetIcon: false,
+            enableLabelDrags: false,
+            enableShiftDragZoom: true,
+            enableRightClick: false,
+            errorDialogsActive: false,
+            useBrowserForJS: true,
+            preventFocus: false,
+            language: "en",
+            // use this instead of ggbBase64 to load a material from GeoGebra Materials Platform
+            // "material_id":12345,
+            material_id: "zpe5cz6d",
+        };
+
+        var parameters2 = {
+            id: "ggbApplet2",
+            width: 400,
+            height: 350,
+            showMenuBar: true,
+            showAlgebraInput: true,
+            showToolBar: true,
+            showToolBarHelp: false,
+            showResetIcon: false,
+            enableLabelDrags: false,
+            enableShiftDragZoom: true,
+            enableRightClick: false,
+            errorDialogsActive: false,
+            useBrowserForJS: true,
+            preventFocus: false,
+            language: "en",
+            // use this instead of ggbBase64 to load a material from GeoGebra Materials Platform
+            // "material_id":12345,
+            material_id: "fpapvyc5",
+        };
+        // is3D=is 3D applet using 3D view, AV=Algebra View, SV=Spreadsheet View, CV=CAS View, EV2=Graphics View 2, CP=Construction Protocol, PC=Probability Calculator, DA=Data Analysis, FI=Function Inspector, PV=Python, macro=Macro View
+        var views = {
+            is3D: 0,
+            AV: 1,
+            SV: 0,
+            CV: 0,
+            EV2: 0,
+            CP: 0,
+            PC: 0,
+            DA: 0,
+            FI: 0,
+            PV: 0,
+            macro: 0,
+        };
+
+        var applet = new GGBApplet(parameters, true);
+
+        //  when used with Math Apps Bundle, uncomment this:
+        //  applet.setHTML5Codebase('GeoGebra/HTML5/5.0/web/');
+        var applet2 = new GGBApplet(parameters2, true);
+
+        //  when used with Math Apps Bundle, uncomment this:
+        //  applet2.setHTML5Codebase('GeoGebra/HTML5/5.0/web/');
+
+        window.onload = function() {
+            applet.inject("ggbApplet");
+            applet2.inject("ggbApplet2");
+        };
+
+        function recup() {
+            var reponse = document.querySelector("#note").value;
+            if (reponse == "x^1/x") {
+                document.querySelector("alors").innerHTML = "victoire";
+            } else {
+                document.querySelector("alors").innerHTML = "défaite";
+            }
+        }
+
+        document.querySelector("#valider").addEventListener("click", recup);
+    </script>
+</div>
+
+<h6 align="center">
+    Devine l'expression de la fonction qui est à gauche. Tu peux t'aider de géogébra à droite.
+</h6>
+<!--<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes %}
+    <li class="list-group-item">
+        {{ note.data }}
+        <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </li>
+    {% endfor %}
+</ul>-->
+<form class="fin" method="POST">
+    <div class="prop">
+        <h6 class="haze">Voici la liste des proposition :</h6>
+        <h1></h1>
+        <div class="gauche">
+            <li>x^x</li>
+            <li>x^x^x</li>
+            <li>sqrt(x+a)+sqrt(b-x)</li>
+            <li>sqrt(sqrt(x))</li>
+            <li>sinh(log(x))</li>
+        </div>
+        <h1></h1>
+        <div class="droite">
+            <li>x^log(x)</li>
+            <li>x^tan(x)</li>
+            <li>x^cos(x)</li>
+            <li>ax^2+bx+c</li>
+            <li>x^1/x</li>
+        </div>
+    </div>
+    <textarea name="note" id="note" class="input"></textarea>
+    <br />
+    <div class="btn" align="center">
+        <button type="submit" class="valider">Valider</button>
+        <h1 class="alors"></h1>
+    </div>
+</form>
+{% endblock %}
